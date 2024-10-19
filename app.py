@@ -55,7 +55,7 @@ CORS(app) # help when you are deploying on cloud(Cross Platform)
 
 try:
   
-    connection = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True) # establish connection with redis at port 6379
+    connection = redis.StrictRedis(host='redis', port=6379, db=0, decode_responses=True) # establish connection with redis at port 6379
     connection.ping() # check for connection 
     print("Connected to Redis successfully!")
 except redis.ConnectionError as e:

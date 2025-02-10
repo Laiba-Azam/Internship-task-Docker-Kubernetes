@@ -45,7 +45,7 @@ import random
 import uuid
 import json
 import redis
-
+import os
 
 
 app = Flask(__name__)
@@ -53,9 +53,10 @@ CORS(app) # help when you are deploying on cloud(Cross Platform)
 
 
 
-try:
-  
-    connection = redis.StrictRedis(host='redis', port=6379, db=0, decode_responses=True) # establish connection with redis at port 6379
+try: 
+    redis_host = os.getenv('REDIS_HOST', 'localhost')
+    redis_port = int(os.getenv('REDIS_PORT', 6379)) 
+    connection = redis.StrictRedis(host=redis_host, port=redis_port, db=0, decode_responses=True) # establish connection with redis at port 6379
     connection.ping() # check for connection 
     print("Connected to Redis successfully!")
 except redis.ConnectionError as e:
@@ -121,7 +122,7 @@ async def get_prediction_result(prediction_id):
 
 # Run the Flask application
 if __name__ == '__main__':
-    app.run(host='localhost', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
 
 
 # I did have taken help from stackoverflow and documentation for redis and docker 
